@@ -1,0 +1,19 @@
+<section>
+  <h3>Spots</h3>
+  <ul class="todo-list">
+    <li class="todo-item" ng-repeat="spot in spots track by $index" ng-class="{'todo-done': todo.isDone}">
+      <h2>{{spot.name}}</h2>
+      <button ng-click="addToTrip(spot)">Add to trip</button>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h3>Trip</h3>
+  <ul class="todo-list">
+    <li class="todo-item" ng-repeat="spot in tripSpots track by $index" ng-class="{'todo-done': todo.isDone}">
+      <h2>{{spot.name}}</h2>
+      <button ng-click="removeFromTrip(spot.id)">Remove from trip</button>
+    </li>
+  </ul>
+</section>
