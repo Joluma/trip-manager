@@ -1,19 +1,53 @@
 <section>
   <h3>Spots</h3>
-  <ul class="todo-list">
-    <li class="todo-item" ng-repeat="spot in spots track by $index" ng-class="{'todo-done': todo.isDone}">
-      <h2>{{spot.name}}</h2>
-      <button ng-click="addToTrip(spot)">Add to trip</button>
-    </li>
-  </ul>
+
+  <div class="ui items">
+    <div class="item" ng-repeat="spot in spots track by $index">
+      <div class="image">
+        <img ng-src="{{spot.cover_image_url}}">
+        <br>
+        <div class="ui labeled icon button blue" ng-click="addToTrip(spot)">
+          <i class="plus icon"></i>
+          Add to trip
+        </div>
+      </div>
+      <div class="content">
+        <a class="header">{{spot.name}}</a>
+        <div class="meta">
+          <span class="cinema">{{spot.adress}}</span>
+        </div>
+        <div class="description">{{spot.top_tip.text.en | limitTo : 100}}</div>
+        <div class="extra">
+          <div class="ui horizontal label" ng-repeat="tag in spot.tags">{{tag.en}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section>
   <h3>Trip</h3>
-  <ul class="todo-list">
-    <li class="todo-item" ng-repeat="spot in tripSpots track by $index" ng-class="{'todo-done': todo.isDone}">
-      <h2>{{spot.name}}</h2>
-      <button ng-click="removeFromTrip(spot)">Remove from trip</button>
-    </li>
-  </ul>
+
+  <div class="ui items">
+    <div class="item" ng-repeat="spot in tripSpots track by $index">
+      <div class="image">
+        <img ng-src="{{spot.image}}">
+        <br>
+        <div class="ui labeled icon button red" ng-click="removeFromTrip(spot)">
+          <i class="remove icon"></i>
+          Remove from trip
+        </div>
+      </div>
+      <div class="content">
+        <a class="header">{{spot.name}}</a>
+        <div class="meta">
+          <span class="cinema">{{spot.adress}}</span>
+        </div>
+        <div class="description">{{spot.top_tip | limitTo : 100}}</div>
+        <div class="extra">
+          <div class="ui horizontal label" ng-repeat="tag in spot.tags">{{tag.en}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

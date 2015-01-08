@@ -9,6 +9,7 @@ angular
       newDay = trip.addDay()
 
       $scope.spots = odigoSpots[0].response
+      console.log $scope.spots[0]
       $scope.tripSpots = trip.currentDay().spots()
 
       $scope.addToTrip = (spot) ->
