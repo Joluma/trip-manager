@@ -1,4 +1,4 @@
-<section>
+<section id="spot-list-panel">
   <h3>Spots</h3>
 
   <div class="ui items">
@@ -14,7 +14,7 @@
       <div class="content">
         <a class="header">{{spot.name}}</a>
         <div class="meta">
-          <span class="cinema">{{spot.adress}}</span>
+          <span class="cinema">{{spot.address}}</span>
         </div>
         <div class="description">{{spot.top_tip.text.en | limitTo : 100}}</div>
         <div class="extra">
@@ -25,27 +25,24 @@
   </div>
 </section>
 
-<section>
-  <h3>Trip</h3>
+<section id="map-panel">
+  <div id="map"></div>
+</section>
 
-  <div class="ui items">
-    <div class="item" ng-repeat="spot in tripSpots track by $index">
-      <div class="image">
-        <img ng-src="{{spot.image}}">
-        <br>
-        <div class="ui labeled icon button red" ng-click="removeFromTrip(spot)">
+<section id="trip-panel">
+  <h3>Trip</h3>
+  
+  <div class="ui divided items">
+  <div class="item" ng-repeat="spot in tripSpots track by $index">
+    <div class="ui tiny image">
+      <img ng-src="{{spot.image}}">
+    </div>
+    <div class="middle aligned content">
+      <a class="header">{{spot.name}}</a>
+      <div class="meta">
+        <span class="cinema">{{spot.address}}</span>
+        <div class="ui icon button red" ng-click="removeFromTrip(spot)">
           <i class="remove icon"></i>
-          Remove from trip
-        </div>
-      </div>
-      <div class="content">
-        <a class="header">{{spot.name}}</a>
-        <div class="meta">
-          <span class="cinema">{{spot.adress}}</span>
-        </div>
-        <div class="description">{{spot.top_tip | limitTo : 100}}</div>
-        <div class="extra">
-          <div class="ui horizontal label" ng-repeat="tag in spot.tags">{{tag.en}}</div>
         </div>
       </div>
     </div>

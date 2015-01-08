@@ -6,8 +6,7 @@ angular
         constructor: (@spot) ->
           @id = @spot.id
           @name = @spot.name
-          @top_tip = @spot.top_tip.text.en
+          @address = @spot.address
           @coords = @spot.coords
           @image = @spot.cover_image_url
-          @tags = @spot.tags
   ]

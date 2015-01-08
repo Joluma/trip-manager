@@ -21,7 +21,9 @@
   "dependencies": {
     "angular": "~1.2.14",
     "angular-route": "~1.2.14",
-    "semantic-ui": "~1.6.2"
+    "semantic-ui": "~1.6.2",
+    "leaflet": "latest",
+    "leaflet.markercluster": "latest"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14"

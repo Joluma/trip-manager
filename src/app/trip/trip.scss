@@ -1,7 +1,30 @@
-section{
-  display: inline-block;
-  vertical-align: top;
-  width: 40%;
+#spot-list-panel{
+  width: 30%;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 10px;
+  position: absolute;
+}
+
+#map-panel{
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  left: 30%;
+
+  #map{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+#trip-panel{
+  width: 20%;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 10px;
+  position: absolute;
+  right: 0;
 }
 
 .todo-list {
