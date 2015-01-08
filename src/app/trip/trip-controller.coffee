@@ -1,17 +1,20 @@
 angular
   .module 'tripManager.trip'
   .controller 'TripCtrl', [
-    "$scope", "$window", "odigoSpots",
-    ($scope,   $window,   odigoSpots) ->
+    "$scope", "$window", "odigoSpots", "Trip",
+    ($scope,   $window,   odigoSpots,   Trip) ->
       'use strict'
 
+      trip = new Trip()
+      newDay = trip.addDay()
+
       $scope.spots = odigoSpots[0].response
-      $scope.tripSpots = []
+      $scope.tripSpots = trip.currentDay().spots()
 
       $scope.addToTrip = (spot) ->
-        $scope.tripSpots.push spot
+        trip.currentDay().addSpot(spot)
 
-      $scope.removeFromTrip = (spotId) ->
-        $scope.tripSpots.splice i,1 for spot, i in $scope.tripSpots when spot.id == spotId
+      $scope.removeFromTrip = (spot) ->
+        trip.currentDay().removeSpot(spot)
 
   ]

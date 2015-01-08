@@ -13,7 +13,7 @@
   <ul class="todo-list">
     <li class="todo-item" ng-repeat="spot in tripSpots track by $index" ng-class="{'todo-done': todo.isDone}">
       <h2>{{spot.name}}</h2>
-      <button ng-click="removeFromTrip(spot.id)">Remove from trip</button>
+      <button ng-click="removeFromTrip(spot)">Remove from trip</button>
     </li>
   </ul>
 </section>
