@@ -29,5 +29,5 @@ angular
         trip.addDay()
 
       do ->
-        MapManager.init($scope.spots)
+        $scope.map = MapManager.init($scope.spots)
   ]

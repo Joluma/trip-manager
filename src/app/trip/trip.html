@@ -26,7 +26,16 @@
 </section>
 
 <section id="map-panel">
-  <div id="map"></div>
+  <!-- <div id="map"></div> -->
+  <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+    <ui-gmap-markers
+      models='spots'
+      coords="'coords'"
+      doCluster="true"
+      clusterOptions="{title: 'Hi I am a Cluster!', gridSize: 60, ignoreHidden: true, minimumClusterSize: 2}"
+    >
+    </ui-gmap-markers>
+  </ui-gmap-google-map>
 </section>
 
 <section id="trip-panel">
