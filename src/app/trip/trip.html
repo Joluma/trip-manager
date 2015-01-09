@@ -6,9 +6,13 @@
       <div class="image">
         <img ng-src="{{spot.cover_image_url}}">
         <br>
-        <div class="ui labeled icon button blue mini" ng-click="trip.currentDay().addSpot(spot)">
+        <div class="ui labeled icon button blue mini" ng-click="trip.currentDay().addSpot(spot)" ng-if="!trip.currentDay().containsSpot(spot)">
           <i class="plus icon"></i>
           Add to trip
+        </div>
+        <div class="ui labeled icon button red mini" ng-click="trip.currentDay().removeSpot(spot)" ng-if="trip.currentDay().containsSpot(spot)">
+          <i class="plus icon"></i>
+          Remove from trip
         </div>
       </div>
       <div class="content">
@@ -26,8 +30,8 @@
 </section>
 
 <section id="map-panel">
-  <!-- <div id="map"></div> -->
-  <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+  <div id="map"></div>
+  <!-- <ui-gmap-google-map center='map.center' zoom='map.zoom'>
     <ui-gmap-markers
       models='spots'
       coords="'coords'"
@@ -35,13 +39,13 @@
       clusterOptions="{title: 'Hi I am a Cluster!', gridSize: 60, ignoreHidden: true, minimumClusterSize: 2}"
     >
     </ui-gmap-markers>
-  </ui-gmap-google-map>
+  </ui-gmap-google-map> -->
 </section>
 
 <section id="trip-panel">
   <h3>Trip</h3>
   
-  <span>Day {{trip.currentDayIndex() + 1}} / </span>
+  <span>Day {{trip.currentDayIndex() + 1}}</span>
   <div class="ui icon buttons">
     <div class="ui button" ng-click="trip.prevDay()">
       <i class="left chevron icon"></i>
@@ -51,6 +55,9 @@
     </div>
     <div class="ui button" ng-click="trip.addDay()">
       <i class="plus icon"></i>
+    </div>
+    <div class="ui button" ng-click="trip.removeDay(trip.currentDayIndex())">
+      <i class="delete icon"></i>
     </div>
   </div>
 

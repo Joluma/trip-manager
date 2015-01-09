@@ -25,11 +25,28 @@ angular
           if _days[_currentDayIndex + 1]?
             _currentDayIndex += 1
           
-        addDay: ->
+        addDay: (indexWhereAddTheDay = null) ->
           newDay = new TripDay()
-          _days.push newDay
+          if indexWhereAddTheDay != null
+            _days.splice indexWhereAddTheDay + 1, 0, newDay
+          else
+            _days.push newDay
           setCurrentDay newDay
-          newDay
+          # @updateSpotsOrderIndex()
+          # @saveToLocal()
+          # @generateName()
+
+        removeDay: (toBeDeletedDayIndex) ->
+          console.log "removeDay " + toBeDeletedDayIndex
+          _days = _.reject _days, (day, i) -> i == toBeDeletedDayIndex
+
+          # if last day go to previous day
+          @prevDay() if toBeDeletedDayIndex == _currentDayIndex && toBeDeletedDayIndex > 0
+
+          # if no day, then add one.
+          @addDay() if _days.length < 1
+
+          # @generateName()
 
         # private methods
 
