@@ -7,13 +7,26 @@ angular
         _days = null
         _currentDayIndex = null
 
+        days: -> _days
+        
         constructor: () ->
           _days = []
-          _currentDayIndex = 0
+          _currentDayIndex = -1
+
+        currentDayIndex: ->
+          _currentDayIndex
 
         currentDay: ->
           _days[_currentDayIndex]
 
+        prevDay: ->
+          if _days[_currentDayIndex - 1]?
+            _currentDayIndex -= 1
+          
+        nextDay: ->
+          if _days[_currentDayIndex + 1]?
+            _currentDayIndex += 1
+          
         addDay: ->
           newDay = new TripDay()
           _days.push newDay
