@@ -6,7 +6,7 @@
       <div class="image">
         <img ng-src="{{spot.cover_image_url}}">
         <br>
-        <div class="ui labeled icon button blue mini" ng-click="addToTrip(spot)">
+        <div class="ui labeled icon button blue mini" ng-click="trip.currentDay().addSpot(spot)">
           <i class="plus icon"></i>
           Add to trip
         </div>
@@ -41,21 +41,21 @@
 <section id="trip-panel">
   <h3>Trip</h3>
   
-  <span>Day {{currentDay() + 1}} / </span>
+  <span>Day {{trip.currentDayIndex() + 1}} / </span>
   <div class="ui icon buttons">
-    <div class="ui button" ng-click="prevDay()">
+    <div class="ui button" ng-click="trip.prevDay()">
       <i class="left chevron icon"></i>
     </div>
-    <div class="ui button" ng-click="nextDay()">
+    <div class="ui button" ng-click="trip.nextDay()">
       <i class="right chevron icon"></i>
     </div>
-    <div class="ui button" ng-click="addDay()">
+    <div class="ui button" ng-click="trip.addDay()">
       <i class="plus icon"></i>
     </div>
   </div>
 
   <div class="ui divided items">
-  <div class="item" ng-repeat="spot in tripSpots track by $index">
+  <div class="item" ng-repeat="spot in trip.currentDay().spots() track by $index">
     <div class="ui tiny image">
       <img ng-src="{{spot.image}}">
     </div>
@@ -63,7 +63,7 @@
       <a class="header">{{spot.name}}</a>
       <div class="meta">
         <span class="cinema">{{spot.address}}</span>
-        <div class="ui icon button red mini" ng-click="removeFromTrip(spot)">
+        <div class="ui icon button red mini" ng-click="trip.currentDay().removeSpot(spot)">
           <i class="remove icon"></i>
         </div>
       </div>

@@ -7,17 +7,15 @@ angular
         _days = null
         _currentDayIndex = null
 
-        days: -> _days
-        
         constructor: () ->
           _days = []
           _currentDayIndex = -1
 
-        currentDayIndex: ->
-          _currentDayIndex
+        days: -> _days
+        
+        currentDayIndex: -> _currentDayIndex
 
-        currentDay: ->
-          _days[_currentDayIndex]
+        currentDay: -> _days[_currentDayIndex]
 
         prevDay: ->
           if _days[_currentDayIndex - 1]?
