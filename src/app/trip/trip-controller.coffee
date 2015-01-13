@@ -5,7 +5,7 @@ angular
     ($scope,   $window,   odigoSpots,   MapManager,   TripManager) ->
       'use strict'
 
-      $scope.trip = TripManager.trip
+      $scope.TripManager = TripManager
       $scope.spots = odigoSpots[0].response
 
       do ->

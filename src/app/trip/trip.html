@@ -6,11 +6,11 @@
       <div class="image">
         <img ng-src="{{spot.cover_image_url}}">
         <br>
-        <div class="ui labeled icon button blue mini" ng-click="trip.currentDay().addSpot(spot)" ng-if="!trip.currentDay().containsSpot(spot)">
+        <div class="ui labeled icon button blue mini" ng-click="TripManager.trip.currentDay().addSpot(spot)" ng-if="!TripManager.trip.currentDay().containsSpot(spot)">
           <i class="plus icon"></i>
           Add to trip
         </div>
-        <div class="ui labeled icon button red mini" ng-click="trip.currentDay().removeSpot(spot)" ng-if="trip.currentDay().containsSpot(spot)">
+        <div class="ui labeled icon button red mini" ng-click="TripManager.trip.currentDay().removeSpot(spot)" ng-if="TripManager.trip.currentDay().containsSpot(spot)">
           <i class="plus icon"></i>
           Remove from trip
         </div>
@@ -43,26 +43,26 @@
 </section>
 
 <section id="trip-panel">
-  <h3>Trip</h3>
+  <h3>{{TripManager.trip.title}}</h3>
   
-  <span>Day {{trip.currentDayIndex() + 1}}</span>
+  <span>Day {{TripManager.trip.currentDayIndex() + 1}}</span>
   <div class="ui icon buttons">
-    <div class="ui button" ng-click="trip.prevDay()">
+    <div class="ui button" ng-click="TripManager.trip.prevDay()" ng-class="{disabled: !TripManager.previousDayExists()}">
       <i class="left chevron icon"></i>
     </div>
-    <div class="ui button" ng-click="trip.nextDay()">
+    <div class="ui button" ng-click="TripManager.trip.nextDay()" ng-class="{disabled: !TripManager.nextDayExists()}">
       <i class="right chevron icon"></i>
     </div>
-    <div class="ui button" ng-click="trip.addDay()">
+    <div class="ui button" ng-click="TripManager.trip.addDay()">
       <i class="plus icon"></i>
     </div>
-    <div class="ui button" ng-click="trip.removeDay(trip.currentDayIndex())">
+    <div class="ui button" ng-click="TripManager.trip.removeDay(TripManager.trip.currentDayIndex())">
       <i class="delete icon"></i>
     </div>
   </div>
 
   <div class="ui divided items">
-  <div class="item" ng-repeat="spot in trip.currentDay().spots() track by $index">
+  <div class="item" ng-repeat="spot in TripManager.trip.currentDay().spots() track by $index">
     <div class="ui tiny image">
       <img ng-src="{{spot.cover_image_url}}">
     </div>
@@ -70,7 +70,7 @@
       <a class="header">{{spot.name}}</a>
       <div class="meta">
         <span class="cinema">{{spot.address}}</span>
-        <div class="ui icon button red mini" ng-click="trip.currentDay().removeSpot(spot)">
+        <div class="ui icon button red mini" ng-click="TripManager.trip.currentDay().removeSpot(spot)">
           <i class="remove icon"></i>
         </div>
       </div>

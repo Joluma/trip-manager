@@ -19,6 +19,7 @@ angular
         addSpot: (@spot) ->
           @spot.orderIndex = @_spots.length
           @_spots.push new DaySpot(@spot)
+          @updateSpotsOrderIndex()
           @updateSpotsCache()
 
         removeSpot: (@spot) ->
