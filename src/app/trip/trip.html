@@ -64,7 +64,7 @@
   <div class="ui divided items">
   <div class="item" ng-repeat="spot in trip.currentDay().spots() track by $index">
     <div class="ui tiny image">
-      <img ng-src="{{spot.image}}">
+      <img ng-src="{{spot.cover_image_url}}">
     </div>
     <div class="middle aligned content">
       <a class="header">{{spot.name}}</a>

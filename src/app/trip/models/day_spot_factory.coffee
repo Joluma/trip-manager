@@ -4,12 +4,12 @@ angular
     () ->
       class DaySpot
         constructor: (@spot) ->
-          @id = @spot.id
-          @orderIndex = @spot.orderIndex
-          @name = @spot.name
-          @address = @spot.address
-          @coords = @spot.coords
-          @image = @spot.cover_image_url
+          @[key] = _.clone @spot[key] for key of @spot
 
-        trimedData: -> @
+        trimedData: ->
+          {
+            id: @id
+            trip_item_id: @trip_item_id,
+            orderIndex: parseInt @orderIndex
+          }
   ]
