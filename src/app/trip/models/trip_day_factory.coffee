@@ -4,15 +4,15 @@ angular
     'DaySpot', 'DirectionsService',
     (DaySpot,   DirectionsService) ->
       class TripDay
-        @_spots               : null
-        @_currentDaySpotsHash : null
-        @_tripPathPoints      : null
-
         constructor: () ->
-          @_spots = []
+          @_orderIndex          = null
+          @_spots               = []
+          @_path                = []
+          @_startBase           = null
+          @_endBase             = null
+          @_currentDaySpotsHash = null
 
-        spots: ->
-          @_spots
+        spots: -> @_spots
 
         containsSpot: (@spot) -> @_currentDaySpotsHash?[@spot.id]?
 
@@ -28,26 +28,42 @@ angular
         allSpotsBounds: ->
           bounds = new google.maps.LatLngBounds()
           bounds.extend(DirectionsService.coords2latlng spot.coords) for spot in @_spots
+          bounds.extend(DirectionsService.coords2latlng @_startBase.coords) if @_startBase?
+          bounds.extend(DirectionsService.coords2latlng @_endBase.coords) if @_endBase?
           bounds
 
         updateSpotsOrderIndex: -> spot.orderIndex = parseInt(index) for spot, index in @_spots
 
+        # this one may be useless we can use 'day._spots.length'
         numberOfTotalSpots: -> @_spots.length
 
         updateSpotsCache: ->
           @_currentDaySpotsHash = {}
           @_currentDaySpotsHash[item.id] = item for item in @_spots
-          console.log @
 
+        # this one may be useless we can use 'day._currentDaySpotsHash'
         allSpotsHash: -> @_currentDaySpotsHash
+
+        optimizeRoute: -> ""
 
         updatePath: ->
           return if @_spots.length < 2
-          @_tripPathPoints = []
-          @_tripPathPoints.push spot.coords for spot in @_spots
+          @_path = []
+          @_path.push spot.coords for spot in @_spots
 
-          @currentDay().tripPathPoints = RomeToRioService.setRoute(@_tripPathPoints).path
+          @currentDay().tripPathPoints = RomeToRioService.setRoute(@_path).path
 
-        trimedData: -> @
-
+        trimedData: ->
+          trimedDay = {}
+          trimedDay.id = @id
+          trimedDay.orderIndex = @orderIndex
+          if @startBase?
+            trimedDay.startBase = {}
+            trimedDay.startBase.name = @startBase.name
+            trimedDay.startBase.coords = @startBase.coords
+          if @endBase?
+            trimedDay.endBase = {}
+            trimedDay.endBase.name = @endBase.name
+            trimedDay.endBase.coords = @endBase.coords
+          trimedDay
   ]
