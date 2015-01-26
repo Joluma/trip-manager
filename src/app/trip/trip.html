@@ -45,7 +45,7 @@
 <section id="trip-panel">
   <h3>{{TripManager.trip.title}}</h3>
   
-  <span>Day {{TripManager.trip.currentDayIndex() + 1}}</span>
+  <span>Day {{TripManager.trip.currentDayIndex + 1}}</span>
   <div class="ui icon buttons">
     <div class="ui button" ng-click="TripManager.trip.prevDay()" ng-class="{disabled: !TripManager.previousDayExists()}">
       <i class="left chevron icon"></i>
@@ -56,7 +56,7 @@
     <div class="ui button" ng-click="TripManager.trip.addDay()">
       <i class="plus icon"></i>
     </div>
-    <div class="ui button" ng-click="TripManager.trip.removeDay(TripManager.trip.currentDayIndex())">
+    <div class="ui button" ng-click="TripManager.trip.removeDay(TripManager.trip.currentDayIndex)">
       <i class="delete icon"></i>
     </div>
   </div>

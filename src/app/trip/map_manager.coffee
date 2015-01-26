@@ -4,6 +4,9 @@ angular
     () ->
       'use strict'
 
+      _map = null
+      _currentDaySpotsPath = null
+
       {
         init: (spots) ->
           ############### map with angular google map
@@ -38,18 +41,35 @@ angular
               lng: 139.710388
             zoom: 10
 
-          map = new google.maps.Map(document.getElementById('map'), mapOptions)
+          _map = new google.maps.Map(document.getElementById('map'), mapOptions)
 
           markers = []
 
           for spot in spots
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(spot.coords.latitude, spot.coords.longitude),
-              map: map,
+              map: _map,
               title: spot.name
             })
             markers.push marker
 
-          markerCluster = new MarkerClusterer(map, markers)
+          markerCluster = new MarkerClusterer(_map, markers)
+
+        updatePath: (path) ->
+          _currentDaySpotsPath?.setMap(null)
+          _currentDaySpotsCoords = []
+
+          for spot in path
+            _currentDaySpotsCoords.push new google.maps.LatLng(spot.coords.latitude, spot.coords.longitude)
+
+          _currentDaySpotsPath = new google.maps.Polyline({
+            path: _currentDaySpotsCoords,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 4
+          })
+
+          _currentDaySpotsPath.setMap(_map)
       }
   ]

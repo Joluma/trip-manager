@@ -1,34 +1,28 @@
 angular
   .module 'tripManager.trip'
   .factory "Trip", [
-    'TripDay',
-    (TripDay) ->
+    'TripDay', '$rootScope', 'MapManager',
+    (TripDay,   $rootScope,   MapManager) ->
       class Trip
-        _days = null
-        _currentDayIndex = null
-
         constructor: () ->
-          _days = []
-          _currentDayIndex = -1
+          @monitorChanges()
+          @days = []
+          @currentDayIndex = -1
 
-        days: -> _days
-        
-        currentDayIndex: -> _currentDayIndex
+        currentDay: -> @days[@currentDayIndex]
 
-        currentDay: -> _days[_currentDayIndex]
-
-        prevDay: -> _currentDayIndex -= 1 if _days[_currentDayIndex - 1]?
+        prevDay: -> @currentDayIndex -= 1 if @days[@currentDayIndex - 1]?
           
-        nextDay: -> _currentDayIndex += 1 if _days[_currentDayIndex + 1]?
+        nextDay: -> @currentDayIndex += 1 if @days[@currentDayIndex + 1]?
           
-        jumpToDay: (dayIndex) -> _currentDayIndex = parseInt dayIndex if _days[dayIndex]?
+        jumpToDay: (dayIndex) -> @currentDayIndex = parseInt dayIndex if @days[dayIndex]?
 
         addDay: (indexWhereAddTheDay = null) ->
           newDay = new TripDay()
           if indexWhereAddTheDay != null
-            _days.splice indexWhereAddTheDay + 1, 0, newDay
+            @days.splice indexWhereAddTheDay + 1, 0, newDay
           else
-            _days.push newDay
+            @days.push newDay
           @setCurrentDay newDay
           @updateDaysOrderIndex()
           @generateTitle()
@@ -36,29 +30,28 @@ angular
 
         removeDay: (toBeDeletedDayIndex) ->
           console.log "removeDay " + toBeDeletedDayIndex
-          _days = _.reject _days, (day, i) -> i == toBeDeletedDayIndex
+          @days = _.reject @days, (day, i) -> i == toBeDeletedDayIndex
 
           # if last day go to previous day
-          @prevDay() if toBeDeletedDayIndex == _currentDayIndex && toBeDeletedDayIndex > 0
+          @prevDay() if toBeDeletedDayIndex == @currentDayIndex && toBeDeletedDayIndex > 0
 
           # if no day, then add one.
-          @addDay() if _days.length < 1
+          @addDay() if @days.length < 1
 
           @generateTitle()
 
         numberOfTotalSpots: ->
           _numberOfTotalSpots = 0
-          _numberOfTotalSpots += day.spots().length for day in _days
+          _numberOfTotalSpots += day.spots().length for day in @days
           _numberOfTotalSpots
 
         # private methods
 
-        setCurrentDay: (day) -> _currentDayIndex = i for d, i in _days when d is day
+        setCurrentDay: (day) -> @currentDayIndex = i for d, i in @days when d is day
         
-        updateDaysOrderIndex: ->  day.orderIndex = parseInt(index) for day, index in _days
+        updateDaysOrderIndex: ->  day.orderIndex = parseInt(index) for day, index in @days
 
-        # change this method with the server side generation when we merge to odigo
-        generateTitle: -> @title = "#{_days.length} days trip"
+        generateTitle: -> @title = "#{@days.length} days trip"
 
         saveDraft: ->
           if @tripId?
@@ -77,12 +70,24 @@ angular
           trimedTrip.destination = @destination
           trimedTrip.start_day = @start_day
           trimedTrip.desc = @desc
-          trimedTrip.days = _.map _days, (day) ->
+          trimedTrip.days = _.map @days, (day) ->
             trimedDay = day.trimedData()
             trimedDay.spots = _.map day.spots(), (spot) ->
               spot.trimedData()
             trimedDay
           trimedTrip.toBeDeleted = @toBeDeleted
           trimedTrip
+
+        tripChangedCallbacks: ->
+          MapManager.updatePath(@days[@currentDayIndex]._spots)
+
+        monitorChanges: ->
+          $rootScope.$watchCollection =>
+            @days
+          , => @tripChangedCallbacks()
+
+          $rootScope.$watchCollection =>
+            @days[@currentDayIndex]?._spots
+          , => @tripChangedCallbacks()
 
   ]
