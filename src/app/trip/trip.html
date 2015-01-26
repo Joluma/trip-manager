@@ -2,7 +2,7 @@
   <h3>Spots</h3>
 
   <div class="ui items">
-    <div class="item" ng-repeat="spot in spots track by $index">
+    <div class="item" ng-repeat="spot in spots track by $index" ng-click="centerMapOnSpot(spot.coords)">
       <div class="image">
         <img ng-src="{{spot.cover_image_url}}">
         <br>

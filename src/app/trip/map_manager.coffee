@@ -31,9 +31,11 @@ angular
         _markerCluster = new MarkerClusterer(_map, _markers)
 
       _updateMarkers = () ->
-        # for spot in _allSpots
-        #   if _markersHash[spot.id]?
-        #     _markers[_markersHash[spot.id].oderIndex].setIcon("assets/img/iconFood.png")
+        for spot in _allSpots
+          if _tripSpotsHash?[spot.id]?
+            _markers[_markersHash[spot.id].oderIndex].setIcon("assets/img/iconFood.png")
+          else
+            _markers[_markersHash[spot.id].oderIndex].setIcon("assets/img/iconDefault.png")
 
       _updatePath = () ->
         _currentDaySpotsPath?.setMap(null)
@@ -54,8 +56,12 @@ angular
 
       Pubsub.sub "updateMap", ->
         _tripSpots = TripManager.trip.currentDay().spots()
+        _tripSpotsHash = TripManager.trip.currentDay().allSpotsHash()
         _updateMarkers()
         _updatePath()
+
+      Pubsub.sub "centerMapOnSpot", (event, spotCoords) ->
+        _map.setCenter(new google.maps.LatLng(spotCoords.latitude, spotCoords.longitude))
 
       {
         init: () ->
