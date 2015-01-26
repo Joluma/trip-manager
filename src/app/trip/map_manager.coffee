@@ -6,6 +6,45 @@ angular
 
       _map = null
       _currentDaySpotsPath = null
+      _markers = []
+      _markersHash = {}
+
+      _addMarkers = (spots) ->
+        for spot in spots
+          return if _markersHash[spot.id]?
+          _markersHash[spot.id] = spot
+          _markersHash[spot.id].oderIndex = _markers.length
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(spot.coords.latitude, spot.coords.longitude),
+            map: _map,
+            title: spot.name,
+            icon: "assets/img/iconDefault.png"
+          })
+          _markers.push marker
+
+        markerCluster = new MarkerClusterer(_map, _markers)
+
+      _updateMarkers = (spots) ->
+        for spot in spots
+          if _markersHash[spot.id]?
+            _markers[_markersHash[spot.id].oderIndex].setIcon("assets/img/iconFood.png")
+
+      _updatePath = (spots) ->
+        _currentDaySpotsPath?.setMap(null)
+        _currentDaySpotsCoords = []
+
+        for spot in spots
+          _currentDaySpotsCoords.push new google.maps.LatLng(spot.coords.latitude, spot.coords.longitude)
+
+        _currentDaySpotsPath = new google.maps.Polyline({
+          path: _currentDaySpotsCoords,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 4
+        })
+
+        _currentDaySpotsPath.setMap(_map)
 
       {
         init: (spots) ->
@@ -43,33 +82,10 @@ angular
 
           _map = new google.maps.Map(document.getElementById('map'), mapOptions)
 
-          markers = []
+          _addMarkers spots
 
-          for spot in spots
-            marker = new google.maps.Marker({
-              position: new google.maps.LatLng(spot.coords.latitude, spot.coords.longitude),
-              map: _map,
-              title: spot.name
-            })
-            markers.push marker
-
-          markerCluster = new MarkerClusterer(_map, markers)
-
-        updatePath: (path) ->
-          _currentDaySpotsPath?.setMap(null)
-          _currentDaySpotsCoords = []
-
-          for spot in path
-            _currentDaySpotsCoords.push new google.maps.LatLng(spot.coords.latitude, spot.coords.longitude)
-
-          _currentDaySpotsPath = new google.maps.Polyline({
-            path: _currentDaySpotsCoords,
-            geodesic: true,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 4
-          })
-
-          _currentDaySpotsPath.setMap(_map)
+        updateMap: (spots) ->
+          _updateMarkers spots
+          _updatePath spots
       }
   ]

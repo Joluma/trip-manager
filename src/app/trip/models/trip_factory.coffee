@@ -79,7 +79,7 @@ angular
           trimedTrip
 
         tripChangedCallbacks: ->
-          MapManager.updatePath(@days[@currentDayIndex]._spots)
+          MapManager.updateMap(@days[@currentDayIndex]._spots)
 
         monitorChanges: ->
           $rootScope.$watchCollection =>
