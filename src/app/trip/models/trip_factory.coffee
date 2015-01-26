@@ -1,8 +1,8 @@
 angular
   .module 'tripManager.trip'
   .factory "Trip", [
-    'TripDay', '$rootScope', 'MapManager',
-    (TripDay,   $rootScope,   MapManager) ->
+    'TripDay', '$rootScope', 'Pubsub',
+    (TripDay,   $rootScope,   Pubsub) ->
       class Trip
         constructor: () ->
           @monitorChanges()
@@ -78,8 +78,7 @@ angular
           trimedTrip.toBeDeleted = @toBeDeleted
           trimedTrip
 
-        tripChangedCallbacks: ->
-          MapManager.updateMap(@days[@currentDayIndex]._spots)
+        tripChangedCallbacks: -> Pubsub.pub "updateMap"
 
         monitorChanges: ->
           $rootScope.$watchCollection =>

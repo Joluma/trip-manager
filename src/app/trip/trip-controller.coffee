@@ -1,13 +1,13 @@
 angular
   .module 'tripManager.trip'
   .controller 'TripCtrl', [
-    "$scope", "$window", "odigoSpots", "MapManager", "TripManager",
-    ($scope,   $window,   odigoSpots,   MapManager,   TripManager) ->
+    "$scope", "$window", "MapManager", "TripManager", "SpotsManager",
+    ($scope,   $window,   MapManager,   TripManager,   SpotsManager) ->
       'use strict'
 
       $scope.TripManager = TripManager
-      $scope.spots = odigoSpots[0].response
+      $scope.spots = SpotsManager.spots()
 
       do ->
-        $scope.map = MapManager.init($scope.spots)
+        $scope.map = MapManager.init()
   ]

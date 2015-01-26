@@ -1,16 +1,22 @@
 angular
   .module 'tripManager.trip'
   .service 'MapManager', [
-    () ->
+    'TripManager', 'Pubsub', 'SpotsManager',
+    (TripManager,   Pubsub,   SpotsManager) ->
       'use strict'
 
-      _map = null
+      _map                 = null
+      _markerCluster       = null
       _currentDaySpotsPath = null
-      _markers = []
-      _markersHash = {}
+      _markers             = []
+      _markersHash         = {}
 
-      _addMarkers = (spots) ->
-        for spot in spots
+      _allSpots            = []
+      _tripSpots           = []
+      _tripSpotsHash       = {}
+
+      _addMarkers = () ->
+        for spot in _allSpots
           return if _markersHash[spot.id]?
           _markersHash[spot.id] = spot
           _markersHash[spot.id].oderIndex = _markers.length
@@ -22,18 +28,18 @@ angular
           })
           _markers.push marker
 
-        markerCluster = new MarkerClusterer(_map, _markers)
+        _markerCluster = new MarkerClusterer(_map, _markers)
 
-      _updateMarkers = (spots) ->
-        for spot in spots
-          if _markersHash[spot.id]?
-            _markers[_markersHash[spot.id].oderIndex].setIcon("assets/img/iconFood.png")
+      _updateMarkers = () ->
+        # for spot in _allSpots
+        #   if _markersHash[spot.id]?
+        #     _markers[_markersHash[spot.id].oderIndex].setIcon("assets/img/iconFood.png")
 
-      _updatePath = (spots) ->
+      _updatePath = () ->
         _currentDaySpotsPath?.setMap(null)
         _currentDaySpotsCoords = []
 
-        for spot in spots
+        for spot in _tripSpots
           _currentDaySpotsCoords.push new google.maps.LatLng(spot.coords.latitude, spot.coords.longitude)
 
         _currentDaySpotsPath = new google.maps.Polyline({
@@ -46,8 +52,14 @@ angular
 
         _currentDaySpotsPath.setMap(_map)
 
+      Pubsub.sub "updateMap", ->
+        _tripSpots = TripManager.trip.currentDay().spots()
+        _updateMarkers()
+        _updatePath()
+
       {
-        init: (spots) ->
+        init: () ->
+          _allSpots = SpotsManager.spots()
           ############### map with angular google map
           # $(".angular-google-map-container").height($(window).height())
           # {
@@ -65,7 +77,7 @@ angular
           # }).addTo(map)
 
           # markers = new L.MarkerClusterGroup()
-          # for spot in spots
+          # for spot in _allSpots
           #   marker = L.marker(new L.LatLng(spot.coords.latitude, spot.coords.longitude), {
           #     title: spot.name
           #   })
@@ -82,10 +94,6 @@ angular
 
           _map = new google.maps.Map(document.getElementById('map'), mapOptions)
 
-          _addMarkers spots
-
-        updateMap: (spots) ->
-          _updateMarkers spots
-          _updatePath spots
+          _addMarkers()
       }
   ]
