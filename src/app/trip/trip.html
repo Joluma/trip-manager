@@ -30,7 +30,14 @@
 </section>
 
 <section id="map-panel">
-  <div id="map"></div>
+  <map center="{{mapOptions.center}}" zoom="{{mapOptions.zoom}}">
+    <!-- <marker
+      ng-repeat="spot in spots"
+      position="[{{spot.coords.latitude}}, {{spot.coords.longitude}}]"
+      title="{{spot.name}}"
+      icon="assets/img/iconDefault.png"></marker> -->
+  </map>
+  <!-- <div id="map"></div> -->
   <!-- <ui-gmap-google-map center='map.center' zoom='map.zoom'>
     <ui-gmap-markers
       models='spots'

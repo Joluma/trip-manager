@@ -55,16 +55,16 @@ angular
         _currentDaySpotsPath.setMap(_map)
 
       Pubsub.sub "updateMap", ->
-        _tripSpots = TripManager.trip.currentDay().spots()
-        _tripSpotsHash = TripManager.trip.currentDay().allSpotsHash()
-        _updateMarkers()
-        _updatePath()
+        # _tripSpots = TripManager.trip.currentDay().spots()
+        # _tripSpotsHash = TripManager.trip.currentDay().allSpotsHash()
+        # _updateMarkers()
+        # _updatePath()
 
       Pubsub.sub "centerMapOnSpot", (event, spotCoords) ->
         _map.setCenter(new google.maps.LatLng(spotCoords.latitude, spotCoords.longitude))
 
       {
-        init: () ->
+        init: (scope) ->
           _allSpots = SpotsManager.spots()
           ############### map with angular google map
           # $(".angular-google-map-container").height($(window).height())
@@ -92,14 +92,31 @@ angular
           # map.addLayer markers
 
           ############### map with google map
-          mapOptions =
-            center:
-              lat: 35.673343
-              lng: 139.710388
-            zoom: 10
+          # mapOptions =
+          #   center:
+          #     lat: 35.673343
+          #     lng: 139.710388
+          #   zoom: 10
 
-          _map = new google.maps.Map(document.getElementById('map'), mapOptions)
+          # _map = new google.maps.Map(document.getElementById('map'), mapOptions)
 
-          _addMarkers()
+          # _addMarkers()
+
+          ############### map with ngmap
+          $("map").height($(window).height())
+          
+          scope.$on 'mapInitialized', (event, map) ->
+            _map = map
+            _addMarkers()
+            # _markers = []
+            # for spot in _allSpots
+            #   latLng = new google.maps.LatLng(spot.coords.latitude, spot.coords.longitude)
+            #   _markers.push(new google.maps.Marker({position:latLng}));
+            #   scope.markerClusterer = new MarkerClusterer(map, _markers, {});
+
+          {
+            center: [35.673343, 139.710388]
+            zoom: 9
+          }
       }
   ]

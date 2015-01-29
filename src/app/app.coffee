@@ -2,6 +2,7 @@ angular.module('tripManager', [
   'ngRoute'
   'uiGmapgoogle-maps'
   'tripManager.trip'
+  'ngMap'
 ])
 .config ($routeProvider) ->
   'use strict'

@@ -10,5 +10,6 @@ angular
 
       $scope.centerMapOnSpot = (spotCoords) -> Pubsub.pub "centerMapOnSpot", spotCoords
       do ->
-        $scope.map = MapManager.init()
+        # $scope.map = MapManager.init()
+        $scope.mapOptions = MapManager.init($scope)
   ]
