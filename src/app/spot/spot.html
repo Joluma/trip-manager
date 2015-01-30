@@ -5,13 +5,19 @@
 <div class="ui segment" ng-if="spot">
   <div class="ui icon buttons huge">
     <div class="ui button" ng-click="goToPrevSpot()">
-      <i class="left chevron icon"></i>
+      <i class="left chevron icon"></i>previous spot
     </div>
+    <div class="or"></div>
     <div class="ui button">
       <a href="#/trips">Back to the trip page</a>
     </div>
+    <div class="or"></div>
+    <div class="ui button">
+      <a href="#/timeline">See timeline</a>
+    </div>
+    <div class="or"></div>
     <div class="ui button" ng-click="goToNextSpot()">
-      <i class="right chevron icon"></i>
+      next spot<i class="right chevron icon"></i>
     </div>
   </div>
 

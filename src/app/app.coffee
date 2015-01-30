@@ -15,6 +15,9 @@ angular.module('tripManager', [
     .when '/spot/:spotId',
       controller: 'SpotCtrl'
       templateUrl: '/spot/spot.html'
+    .when '/timeline',
+      controller: 'TimelineCtrl'
+      templateUrl: '/spot/timeline.html'
     .otherwise
       redirectTo: '/trip'
 .config (uiGmapGoogleMapApiProvider) ->

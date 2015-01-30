@@ -1,0 +1,25 @@
+<section id="cd-timeline" class="cd-container">
+  <div class="cd-timeline-block" ng-repeat="spot in spots">
+    <div class="cd-timeline-img cd-picture">
+      <img src="assets/img/iconDefault.png" alt="Picture">
+    </div>
+
+    <div class="cd-timeline-content">
+      <div class="ui card">
+        <div class="image">
+          <img ng-src="{{spot.cover_image_url}}">
+        </div>
+        <div class="content">
+          <a class="header">{{spot.name}}</a>
+          <div class="meta">
+            <span class="date">{{spot.address}}</span>
+          </div>
+          <div class="description">{{spot.top_tip.text.en | limitTo : 100}}</div>
+        </div>
+        <div class="extra content">
+          <div class="ui horizontal label" ng-repeat="tag in spot.tags">{{tag.en}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
