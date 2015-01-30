@@ -1,0 +1,21 @@
+<div class="ui segment" ng-if="!spot">
+  <img class="ui image centered" src="assets/img/loader.gif" alt="">
+</div>
+
+<div class="ui segment" ng-if="spot">
+  <div class="ui icon buttons huge">
+    <div class="ui button" ng-click="goToPrevSpot()">
+      <i class="left chevron icon"></i>
+    </div>
+    <div class="ui button" ng-click="goToNextSpot()">
+      <i class="right chevron icon"></i>
+    </div>
+  </div>
+
+  <h1>{{spot.name}}</h1>
+  <p>{{spot.address}}</p>
+  <div class="ui horizontal label" ng-repeat="tag in spot.tags">{{tag.en}}</div>
+
+  <img class="ui centered large image" ng-src="{{spot.cover_image_url}}">
+  <div>{{spot.top_tip.text.en}}</div>
+</div>

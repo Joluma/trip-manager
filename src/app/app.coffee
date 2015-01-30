@@ -2,6 +2,7 @@ angular.module('tripManager', [
   'ngRoute'
   'uiGmapgoogle-maps'
   'tripManager.trip'
+  'tripManager.spot'
   'ngMap'
 ])
 .config ($routeProvider) ->
@@ -10,6 +11,9 @@ angular.module('tripManager', [
     .when '/trip',
       controller: 'TripCtrl'
       templateUrl: '/trip/trip.html'
+    .when '/spot/:spotId',
+      controller: 'SpotCtrl'
+      templateUrl: '/spot/spot.html'
     .otherwise
       redirectTo: '/trip'
 .config (uiGmapGoogleMapApiProvider) ->
