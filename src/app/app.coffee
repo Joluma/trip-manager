@@ -1,5 +1,6 @@
 angular.module('tripManager', [
   'ngRoute'
+  'ngAnimate'
   'uiGmapgoogle-maps'
   'tripManager.trip'
   'tripManager.spot'

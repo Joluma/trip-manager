@@ -5,6 +5,7 @@ angular
     ($scope,   $window,   MapManager,   TripManager,   SpotsManager,   Pubsub) ->
       'use strict'
 
+      $scope.pageClass = "page-trip"
       $scope.TripManager = TripManager
       $scope.spots = SpotsManager.spots()
 

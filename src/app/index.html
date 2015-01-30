@@ -13,14 +13,16 @@
     
     <!-- inject:css -->
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/spot/spot.css">
     <link rel="stylesheet" href="/css/trip/trip.css">
     <!-- endinject -->
   </head>
   <body>
-    <ng-view></ng-view>
+    <ng-view class="page {{pageClass}}"></ng-view>
     <!-- inject:vendor:js -->
     <script src="/angular/angular.js"></script>
     <script src="/angular-route/angular-route.js"></script>
+    <script src="/angular-animate/angular-animate.js"></script>
     <script src="/jquery/dist/jquery.js"></script>
     <script src="/leaflet/dist/leaflet.js"></script>
     <script src="/leaflet/dist/leaflet-src.js"></script>
