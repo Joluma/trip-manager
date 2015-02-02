@@ -13,7 +13,7 @@ angular.module('tripManager', [
     .when '/trip',
       controller: 'TripCtrl'
       templateUrl: '/trip/trip.html'
-    .when '/spot/:spotId',
+    .when '/spot/:spotId/:dir',
       controller: 'SpotCtrl'
       templateUrl: '/spot/spot.html'
     .when '/timeline',
