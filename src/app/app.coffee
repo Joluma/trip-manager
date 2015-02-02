@@ -5,6 +5,7 @@ angular.module('tripManager', [
   'tripManager.trip'
   'tripManager.spot'
   'ngMap'
+  'drahak.hotkeys'
 ])
 .config ($routeProvider) ->
   'use strict'

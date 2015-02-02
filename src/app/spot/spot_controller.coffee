@@ -1,8 +1,8 @@
 angular
   .module 'tripManager.spot'
   .controller 'SpotCtrl', [
-    "$scope", "$routeParams", "SpotsManager",
-    ($scope,   $routeParams,   SpotsManager) ->
+    "$scope", "$routeParams", "SpotsManager", "$hotkey",
+    ($scope,   $routeParams,   SpotsManager,   $hotkey) ->
       'use strict'
 
       $scope.pageClass = "page-spot"
@@ -22,4 +22,15 @@ angular
       do ->
         _spots = SpotsManager.spots()
         $scope.spot = SpotsManager.spotsHash()[$routeParams.spotId]
+
+        $hotkey.bind 'left', ->
+          $scope.goToPrevSpot()
+        $hotkey.bind 'right', ->
+          $scope.goToNextSpot()
+
+      $scope.$on "$destroy", ->        
+        $hotkey.unbind 'left', ->
+          $scope.goToPrevSpot()
+        $hotkey.unbind 'right', ->
+          $scope.goToNextSpot()
   ]
